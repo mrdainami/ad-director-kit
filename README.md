@@ -1,5 +1,7 @@
 # The AI Ad Director Kit
 
+> **📖 Full setup guide + walkthrough:** https://dainami.ai/resources/ad-director-kit
+
 A self-contained Claude project for making brand video ads. Drop a folder for each brand into `brands/`, open this folder in **Claude Cowork**, and chat with the Director to onboard the brand + generate ads. Every artefact lands in `brands/<brand>/ads/<ad-slug>/`.
 
 No app, no UI, no deploys, no scripts to maintain. Just a folder + two drag-and-drop MCPs.
