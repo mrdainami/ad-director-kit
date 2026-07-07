@@ -57,7 +57,7 @@ If the user gives vague answers, probe one level deeper before moving on.
 
 ### 4. Write `brands/<slug>/BRAND.md`
 
-Use this structure (adapted from the Ace of Plates example at `brands/aceofplates/BRAND.md`):
+Use this structure:
 
 ```markdown
 # <Brand name> — Brand Card
@@ -92,7 +92,7 @@ Use this structure (adapted from the Ace of Plates example at `brands/aceofplate
 
 ### 5. Write `brands/<slug>/PRODUCT-TRUTH.md`
 
-Use the Ace of Plates template (at `brands/aceofplates/PRODUCT-TRUTH.md`) as the skeleton but adapt sections to the user's product. Common sections:
+Use this skeleton and adapt the sections to the user's product. Common sections:
 
 - **Identity** — product, category, market, price anchor
 - **Physical anatomy** — per major part (e.g. "the plate", "the bracket"): surface, dimensions, key visual truth, photo anchor filenames, common AI hallucinations
@@ -104,11 +104,11 @@ Use the Ace of Plates template (at `brands/aceofplates/PRODUCT-TRUTH.md`) as the
 
 The detail level should match the user's product. A simple product (e.g. a candle) may need a 100-line PRODUCT-TRUTH; a complex product with multiple parts (e.g. a furniture system with brackets, panels, fittings) may need 300+ lines.
 
-If the user wants a deeper version with action-realism libraries (like the AOP `PRODUCT-SPEC.md`), offer to generate `PRODUCT-SPEC.md` as a follow-up. Most brands don't need it.
+If the user wants a deeper version with action-realism libraries, offer to generate a `PRODUCT-SPEC.md` as a follow-up. Most brands don't need it.
 
 ### 5b. Write `brands/<slug>/reference-map.json`
 
-Build the role → file manifest the recipe uses to pick references (this replaces any hardcoded folder lookups). For each reference role the product needs, map it to its file under `references/`, and record `provenance` (`real` | `aigen` | `unknown`) per role. A simple product may have ~3 roles; a complex one 15+. See `brands/aceofplates/reference-map.json` for the shape.
+Build the role → file manifest the recipe uses to pick references (this replaces any hardcoded folder lookups). For each reference role the product needs, map it to its file under `references/`, and record `provenance` (`real` | `aigen` | `unknown`) per role. A simple product may have ~3 roles; a complex one 15+. Shape: `{ "roles": { "<role-name>": { "file": "references/<file>", "provenance": "real" }, ... } }`.
 
 ### 6. Show, gate, refine
 

@@ -253,7 +253,7 @@ Per segment:
      ```
      REFERENCE IMAGE SLOTS:
      Image 1 = SB-A storyboard — 4-panel shot sequence layout, match these visual beats
-     Image 2 = F-PLATE-STUDIO — hero Ace of Plates metal print with family photo, plate identity throughout
+     Image 2 = F-PLATE-STUDIO — hero metal-print product with family photo, product identity throughout
      Image 3 = plate-finish-edge-thin — razor-thin aluminium edge cross-section
      Image 4 = plate-finish-corner-macro — glossy print surface and corner detail
      ```
@@ -273,7 +273,7 @@ Per segment:
      ```
 
    **SCALE LOCK block** — apply the pattern from `.claude/rules/prompt-conventions.md` §6. For this recipe, the block goes **after the slot legend and after the storyboard-note** (so the model sees: slots → "Image 1 is layout only" → dimensions → SHOT blocks).
-   - Example for an Ace of Plates segment with bracket + plate:
+   - Example for a metal-print product segment with bracket + plate:
      ```
      SCALE LOCK:
      - Plate: A4–A2 size (21×30cm to 42×60cm). Razor-thin 4–5mm edge, single solid sheet.
@@ -292,7 +292,7 @@ Per segment:
      VOICEOVER — warm Singaporean female, 28–35, clear unhurried delivery, confident but approachable, conversational Singapore English without heavy particles, slight natural warmth, measured pace with deliberate pauses at key beats:
      "Most people put their photos in a frame. Here's why that's about to change." — plays over Shot 1 and Shot 2
      — pause one beat, then a soft gloss shimmer sound as light sweeps the plate face —
-     "This is a metal print from Ace of Plates. High-gloss aluminium — not paper, not canvas, not acrylic." — plays over Shot 3
+     "This is a high-gloss metal print. Aluminium, not paper, not canvas, not acrylic." — plays over Shot 3
      "The difference? Your colours are more vivid than any paper print you've ever seen." — plays over Shot 4
      NO background music.
      ```

@@ -25,7 +25,7 @@ The ffmpeg installer is large (~112 MB) because the ffmpeg program is packed
 
 The ffmpeg connector needs no key. The KIE connector does:
 
-1. Get a KIE.ai account + API key from https://kie.ai, and load some credits
+1. Get a KIE.ai account + API key from [kie.ai](https://kie.ai?ref=41abfa41934c4f15a97d88d2d4f8162a), and load some credits
    (generating video costs credits).
 2. Open the KIE connector's settings in Claude and paste your API key in.
 

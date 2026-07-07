@@ -91,7 +91,7 @@ The kie MCP owns submit/poll envelope, file upload, per-model payload discovery 
 **You do not auto-poll.** Submit, persist `task_id`, surface the board, then STOP. Status checks run only when the user asks — one `kie_get` per outstanding task, in parallel, single turn. Board states: ⏳ generating · ✅ landed · 👍 approved · 📦 archived. Full lifecycle, board schema, and regen flow in `.claude/rules/kie-and-files.md` §4.
 
 ### Memory is persistent
-Cross-session decisions ("we settled on cooler tones for Ace of Plates", "the bracket regen prompt that finally worked") go in `.claude/agent-memory/<topic>.md`. Read this folder at session start.
+Cross-session decisions ("we settled on cooler tones for this brand", "the regen prompt that finally worked") go in `.claude/agent-memory/<topic>.md`. Read this folder at session start.
 
 ### File scope discipline
 - Read: anywhere under `cowork/`

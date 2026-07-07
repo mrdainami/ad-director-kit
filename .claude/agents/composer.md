@@ -20,7 +20,7 @@ All ffmpeg / ffprobe / mkdir / mv commands go through the connected **ffmpeg MCP
 
 ## Inputs the Director passes
 
-- Active ad folder path (e.g. `brands/aceofplates/ads/02-what-makes-metal-print-different/`)
+- Active ad folder path (e.g. `brands/<brand>/ads/<ad-slug>/`)
 - The picked BGM filename (e.g. `bgm-variant-B.mp3`)
 - Variant label (default `default`; user can ask for `fast`, `loud-bgm`, etc.)
 - Any overrides on top of the recipe defaults (BGM level, end-card duration, caption toggle)

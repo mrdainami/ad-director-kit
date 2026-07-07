@@ -13,7 +13,7 @@ No app, no UI, no deploys, no scripts to maintain. Just a folder + two drag-and-
 | **Claude Cowork** | The client (desktop app) | Download from https://claude.com/download |
 | **kie-mcp.mcpb** (16 MB) | All AI generation: images, video, music via KIE.ai | Drag `cowork/tools/kie-mcp.mcpb` onto Cowork → paste KIE API key |
 | **ffmpeg-mcp.mcpb** (107 MB) | Compose: concat, BGM mix, end-card. **Bundles ffmpeg + ffprobe binaries.** Also runs `curl` / `mkdir` / etc. | Drag `cowork/tools/ffmpeg-mcp.mcpb` onto Cowork — no key |
-| **KIE API key** | Generation budget (pay-as-you-go, ~$5–15 per ad) | https://kie.ai → Dashboard → API Keys |
+| **KIE API key** | Generation budget (pay-as-you-go, ~$5–15 per ad) | [kie.ai](https://kie.ai?ref=41abfa41934c4f15a97d88d2d4f8162a) → Dashboard → API Keys |
 
 That's the **complete install list**. No Node.js, no ffmpeg system install, no Python, no Docker, no cloud storage.
 
@@ -22,7 +22,7 @@ That's the **complete install list**. No Node.js, no ffmpeg system install, no P
 ## First-time setup (≈ 5 minutes)
 
 1. Install **Claude Cowork** if you don't have it.
-2. Sign up at **https://kie.ai** and copy an API key.
+2. Sign up at **[kie.ai](https://kie.ai?ref=41abfa41934c4f15a97d88d2d4f8162a)** and copy an API key.
 3. Open Cowork. Drag `cowork/tools/kie-mcp.mcpb` onto the window → paste your KIE key when prompted.
 4. Drag `cowork/tools/ffmpeg-mcp.mcpb` onto the window → no key needed.
 5. Restart Cowork so both bundles register.
@@ -33,12 +33,7 @@ After that, the two MCPs are registered at the **user level** — they're availa
 
 ## Your first message
 
-You're now talking to the Director (driven by `CLAUDE.md`). Two starting paths:
-
-**Make an ad for the sample brand (Ace of Plates, included):**
-> *"Use seedance-storyboard for aceofplates. Idea: \[your concept\]."*
-
-**Add your own brand first — two onramps:**
+You're now talking to the Director (driven by `CLAUDE.md`). This template ships with no brand — your first step is to add yours. Two onramps:
 
 *Onramp A (scrape from URL):* tell the Director *"Scrape my brand from \<URL\>"*. The `scrape-brand` skill pulls product images + brand copy from the site, downloads them into `brands/<slug>/brand-kit/`, drafts `BRAND.md` + `PRODUCT-TRUTH.md` from the synthesis. You review + refine. Works on most static + Shopify / Webflow / WooCommerce stores. Falls back to self-upload if the site is too JS-heavy.
 
@@ -108,11 +103,9 @@ claude
 
 Claude Code requires Node 18+ installed locally (it's itself a Node app). The Cowork path bundles everything inside the `.mcpb` files.
 
-## Current sample brand
+## Brands
 
-| Brand | Status |
-|---|---|
-| `aceofplates` | Fully populated — 22 product photos + logo + BRAND.md + PRODUCT-TRUTH.md + PRODUCT-SPEC.md. Use this as the example for what a complete brand kit looks like. |
+`brands/` ships empty — you add your own (see **Your first message** above). Onboarding writes each brand a `BRAND.md`, `PRODUCT-TRUTH.md`, `reference-map.json`, and drops your product photos + logo under `brands/<slug>/`. That folder is what makes the ads on-brand instead of generic.
 
 ## Recipes available
 
