@@ -1,0 +1,5 @@
+{
+  "backend": "kie",
+  "note": "Lazy per-file cache of KIE-hosted reference URLs. Each entry: {url, uploaded_at}. KIE URLs expire ~3 days; treat as stale after ~2.5 days and re-upload via kie_upload_file. No bulk upload.",
+  "files": {}
+}

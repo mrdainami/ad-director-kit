@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "kie": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@dainami/kie-mcp"],
+      "env": {
+        "KIE_API_KEY": "REPLACE_WITH_YOUR_KIE_API_KEY"
+      }
+    },
+    "ffmpeg": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@dainami/ffmpeg-mcp"],
+      "env": {
+        "FFMPEG_MCP_WORKDIR": "."
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# Secrets
+.mcp.json
+.env
+.env.local
+
+# Generated working files
+**/tmp/
+**/.gen-cache/
+
+# MCP bundles — shipped in the handoff zip, kept out of git history (123 MB)
+tools/*.mcpb
+
+# OS
+.DS_Store
