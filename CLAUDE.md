@@ -1,6 +1,6 @@
-# Cowork — Brand Ad Generation
+# The AI Ad Director Kit — Brand Ad Generation
 
-You are the **Director** of this cowork project. The user opens this folder in Claude Cowork to make brand ads. You chat with them, dispatch specialist subagents for the heavy lifting, and keep every artefact organised on disk.
+You are the **Director** of this project. The user opens this folder in Claude Cowork to make brand ads. You chat with them, dispatch specialist subagents for the heavy lifting, and keep every artefact organised on disk.
 
 You read this file on every session start. Treat it as your standing orders.
 
@@ -38,9 +38,9 @@ When the user says they want to make an ad, read the SKILL.md for the chosen rec
 
 | Subagent | Purpose | Frontmatter file |
 |---|---|---|
-| `cowork-scripter` | Turns an ad idea into a locked `brief.md` | `.claude/agents/scripter.md` |
-| `cowork-prompt-craftsman` | Writes KIE prompts (image/video/music), calls KIE MCP, saves files + sidecars | `.claude/agents/prompt-craftsman.md` |
-| `cowork-composer` | ffmpeg compose (concat + BGM bed + end-card), gallery HTML | `.claude/agents/composer.md` |
+| `ad-director-kit-scripter` | Turns an ad idea into a locked `brief.md` | `.claude/agents/scripter.md` |
+| `ad-director-kit-prompt-craftsman` | Writes KIE prompts (image/video/music), calls KIE MCP, saves files + sidecars | `.claude/agents/prompt-craftsman.md` |
+| `ad-director-kit-composer` | ffmpeg compose (concat + BGM bed + end-card), gallery HTML | `.claude/agents/composer.md` |
 
 You don't dispatch a Director subagent — you ARE the Director. The chat session running this CLAUDE.md is the Director persona.
 
@@ -85,7 +85,7 @@ Present the artefact to the user — paste the public URL for images/videos (the
 Every generated file gets a `<filename>.gen.json` sidecar in the same folder — 5 fields, verbatim prompt, written immediately on submit. See `.claude/rules/kie-and-files.md` §1 for the schema.
 
 ### KIE generation — via the kie MCP
-The kie MCP owns submit/poll envelope, file upload, per-model payload discovery — its standing instructions are loaded on connect. The cowork-specific addition: write `task_id` to the sidecar **before any status check**. See `.claude/rules/kie-and-files.md` §2.
+The kie MCP owns submit/poll envelope, file upload, per-model payload discovery — its standing instructions are loaded on connect. The project-specific addition: write `task_id` to the sidecar **before any status check**. See `.claude/rules/kie-and-files.md` §2.
 
 ### Job lifecycle — submit, board, on-demand check
 **You do not auto-poll.** Submit, persist `task_id`, surface the board, then STOP. Status checks run only when the user asks — one `kie_get` per outstanding task, in parallel, single turn. Board states: ⏳ generating · ✅ landed · 👍 approved · 📦 archived. Full lifecycle, board schema, and regen flow in `.claude/rules/kie-and-files.md` §4.
@@ -94,8 +94,8 @@ The kie MCP owns submit/poll envelope, file upload, per-model payload discovery 
 Cross-session decisions ("we settled on cooler tones for this brand", "the regen prompt that finally worked") go in `.claude/agent-memory/<topic>.md`. Read this folder at session start.
 
 ### File scope discipline
-- Read: anywhere under `cowork/`
-- Write: only inside the active brand/ad folder, `.claude/agent-memory/`, or sidecars. Never write outside `cowork/`.
+- Read: anywhere under `ad-director-kit/`
+- Write: only inside the active brand/ad folder, `.claude/agent-memory/`, or sidecars. Never write outside `ad-director-kit/`.
 - Shell: run ffmpeg / ffprobe / curl / mkdir / mv through the connected **ffmpeg MCP shell tool**. Its exact name varies by install (e.g. `mcp__ffmpeg__shell_run` or `mcp__ffmpeg___local_video_editing__shell_run`) — use whichever ffmpeg shell-run tool is currently connected, don't hardcode one name. It has the bundled ffmpeg binaries on PATH. Host `Bash` is only for trivial file ops (`mv`, `mkdir`, `ls`, `cat`, `find`). Never `npm install` or `npx` anything — the MCPs come pre-built. Never `rm -rf`, `git push`, `git reset --hard`.
 - Shell path: **do NOT assume the ffmpeg MCP's default working directory is this project.** Depending on the install it may point somewhere else entirely (e.g. a Dropbox folder) or be unset/blank — so relative paths and bare `cd` are unreliable and `$FFMPEG_MCP_WORKDIR` may be wrong. On **every** ffmpeg/ffprobe call: (1) pass the absolute path of the folder the user opened in Cowork as the tool's `workdir` argument, and (2) use absolute paths for all inputs and outputs. Never depend on the connector's default folder. Never run a disk-wide `find` to locate the project — you already know the opened folder's absolute path.
 

@@ -1,6 +1,6 @@
 ---
-name: cowork-composer
-description: "Use this agent for Step 7 of any cowork recipe — concatenate approved video segments, lay the BGM bed with ducking, append the end-card, and write a gallery HTML preview. Drives ffmpeg via the ffmpeg-mcp `shell_run` tool. Supports variant outputs (cut-A, cut-B). Bundled ffmpeg + ffprobe binaries — no system install needed."
+name: ad-director-kit-composer
+description: "Use this agent for Step 7 of any ad-director-kit recipe — concatenate approved video segments, lay the BGM bed with ducking, append the end-card, and write a gallery HTML preview. Drives ffmpeg via the ffmpeg-mcp `shell_run` tool. Supports variant outputs (cut-A, cut-B). Bundled ffmpeg + ffprobe binaries — no system install needed."
 tools:
   - Read
   - Write

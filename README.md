@@ -1,6 +1,6 @@
-# cowork
+# The AI Ad Director Kit
 
-A self-contained Claude project for making brand video ads. Drop a folder for each brand into `brands/`, open `cowork/` in **Claude Cowork**, and chat with the Director to onboard the brand + generate ads. Every artefact lands in `brands/<brand>/ads/<ad-slug>/`.
+A self-contained Claude project for making brand video ads. Drop a folder for each brand into `brands/`, open this folder in **Claude Cowork**, and chat with the Director to onboard the brand + generate ads. Every artefact lands in `brands/<brand>/ads/<ad-slug>/`.
 
 No app, no UI, no deploys, no scripts to maintain. Just a folder + two drag-and-drop MCPs.
 
@@ -11,8 +11,8 @@ No app, no UI, no deploys, no scripts to maintain. Just a folder + two drag-and-
 | Thing | Why | How |
 |---|---|---|
 | **Claude Cowork** | The client (desktop app) | Download from https://claude.com/download |
-| **kie-mcp.mcpb** (16 MB) | All AI generation: images, video, music via KIE.ai | Drag `cowork/tools/kie-mcp.mcpb` onto Cowork → paste KIE API key |
-| **ffmpeg-mcp.mcpb** (107 MB) | Compose: concat, BGM mix, end-card. **Bundles ffmpeg + ffprobe binaries.** Also runs `curl` / `mkdir` / etc. | Drag `cowork/tools/ffmpeg-mcp.mcpb` onto Cowork — no key |
+| **kie-mcp.mcpb** (16 MB) | All AI generation: images, video, music via KIE.ai | Drag `ad-director-kit/tools/kie-mcp.mcpb` onto Cowork → paste KIE API key |
+| **ffmpeg-mcp.mcpb** (107 MB) | Compose: concat, BGM mix, end-card. **Bundles ffmpeg + ffprobe binaries.** Also runs `curl` / `mkdir` / etc. | Drag `ad-director-kit/tools/ffmpeg-mcp.mcpb` onto Cowork — no key |
 | **KIE API key** | Generation budget (pay-as-you-go, ~$5–15 per ad) | [kie.ai](https://kie.ai?ref=41abfa41934c4f15a97d88d2d4f8162a) → Dashboard → API Keys |
 
 That's the **complete install list**. No Node.js, no ffmpeg system install, no Python, no Docker, no cloud storage.
@@ -23,10 +23,10 @@ That's the **complete install list**. No Node.js, no ffmpeg system install, no P
 
 1. Install **Claude Cowork** if you don't have it.
 2. Sign up at **[kie.ai](https://kie.ai?ref=41abfa41934c4f15a97d88d2d4f8162a)** and copy an API key.
-3. Open Cowork. Drag `cowork/tools/kie-mcp.mcpb` onto the window → paste your KIE key when prompted.
-4. Drag `cowork/tools/ffmpeg-mcp.mcpb` onto the window → no key needed.
+3. Open Cowork. Drag `ad-director-kit/tools/kie-mcp.mcpb` onto the window → paste your KIE key when prompted.
+4. Drag `ad-director-kit/tools/ffmpeg-mcp.mcpb` onto the window → no key needed.
 5. Restart Cowork so both bundles register.
-6. In Cowork: **Work in a project → Select folder → pick this `cowork/` folder**.
+6. In Cowork: **Work in a project → Select folder → pick this `ad-director-kit/` folder**.
 7. Send your first message (see below).
 
 After that, the two MCPs are registered at the **user level** — they're available in every Cowork project, not just this one. Install once, use forever.
@@ -38,7 +38,7 @@ You're now talking to the Director (driven by `CLAUDE.md`). This template ships 
 *Onramp A (scrape from URL):* tell the Director *"Scrape my brand from \<URL\>"*. The `scrape-brand` skill pulls product images + brand copy from the site, downloads them into `brands/<slug>/brand-kit/`, drafts `BRAND.md` + `PRODUCT-TRUTH.md` from the synthesis. You review + refine. Works on most static + Shopify / Webflow / WooCommerce stores. Falls back to self-upload if the site is too JS-heavy.
 
 *Onramp B (self-upload):*
-1. `mkdir cowork/brands/<your-slug>/brand-kit/{products,logo,notes}`
+1. `mkdir ad-director-kit/brands/<your-slug>/brand-kit/{products,logo,notes}`
 2. Drop your product photos in `brand-kit/products/` (organise however makes sense — by anatomy, by SKU, flat)
 3. Drop your logo in `brand-kit/logo/`
 4. In Cowork: *"Onboard my brand \<your-slug\>"*
@@ -53,7 +53,7 @@ The Director runs preflight automatically on first message (verifies both MCPs, 
 ## What's in the folder
 
 ```
-cowork/
+ad-director-kit/
   CLAUDE.md                                ← Director persona (auto-loaded by Claude)
   README.md                                ← this file
   .mcp.json.example                        ← Claude Code users only (not needed for Cowork)
@@ -95,9 +95,9 @@ cowork/
 If you'd rather use Claude Code (the CLI), do this instead of steps 3–5 above:
 
 ```bash
-cp cowork/.mcp.json.example cowork/.mcp.json
-# edit cowork/.mcp.json, paste your KIE key
-cd cowork
+cp ad-director-kit/.mcp.json.example ad-director-kit/.mcp.json
+# edit ad-director-kit/.mcp.json, paste your KIE key
+cd ad-director-kit
 claude
 ```
 
@@ -123,7 +123,7 @@ Claude Code requires Node 18+ installed locally (it's itself a Node app). The Co
 
 ## Troubleshooting
 
-- **"KIE MCP not responding"** → the `.mcpb` didn't install. Re-drag `cowork/tools/kie-mcp.mcpb` onto Cowork, paste key, restart.
+- **"KIE MCP not responding"** → the `.mcpb` didn't install. Re-drag `ad-director-kit/tools/kie-mcp.mcpb` onto Cowork, paste key, restart.
 - **"ffmpeg-mcp shell_run failed: command not found"** → the bundled binary's PATH prepend isn't working. Check ffmpeg-mcp installed cleanly; reinstall the `.mcpb` if not.
-- **"asset upload failed"** → check internet (catbox.moe must be reachable); if catbox is blocked in your region, see `cowork/tools/README.md` for alternative backends.
+- **"asset upload failed"** → check internet (catbox.moe must be reachable); if catbox is blocked in your region, see `ad-director-kit/tools/README.md` for alternative backends.
 - **"the agent isn't following the recipe"** → verify `CLAUDE.md` and the skill markdown loaded — restart the Cowork session if you just edited them.

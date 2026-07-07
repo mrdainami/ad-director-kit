@@ -15,7 +15,7 @@ HOW TO USE THIS TEMPLATE
 3. Delete this HTML comment block.
 4. Fill in every `<placeholder>` below.
 5. Delete any sections that don't apply to this recipe (e.g. drop "Recipe-specific overrides" if there are none; drop the music step if the recipe has no audio).
-6. Add a one-line entry in `cowork/CLAUDE.md` → "Available skills" under the matching group.
+6. Add a one-line entry in `ad-director-kit/CLAUDE.md` → "Available skills" under the matching group.
 
 The template covers what's *unique* to a recipe. Everything cross-cutting (prompt conventions, KIE plumbing, file conventions, gate-every-artefact) lives in `.claude/rules/` and `CLAUDE.md` — don't restate.
 -->
@@ -34,11 +34,11 @@ You (the Director) follow these steps in order. Each step has a gate — never s
 
 | Output | Format | Generator | Step |
 |---|---|---|---|
-| Locked brief | `brief.md` | `cowork-scripter` subagent | 1 |
+| Locked brief | `brief.md` | `ad-director-kit-scripter` subagent | 1 |
 | Recipe plan | `plan.md` | Director (you) writes directly | 2 |
-| <artefact> | <format e.g. PNG, MP4, MP3> | `cowork-prompt-craftsman` → <KIE model> | <step #> |
+| <artefact> | <format e.g. PNG, MP4, MP3> | `ad-director-kit-prompt-craftsman` → <KIE model> | <step #> |
 | … | … | … | … |
-| Final cut(s) | <format> | `cowork-composer` → ffmpeg | <step #> |
+| Final cut(s) | <format> | `ad-director-kit-composer` → ffmpeg | <step #> |
 
 ## Folder layout for one ad
 
@@ -91,7 +91,7 @@ mkdir -p brands/<brand>/ads/<slug>/{<step-folder-1>,<step-folder-2>,final} \
 ## Step 1 — <step name>
 
 **Inputs:** <what files/info this step needs>
-**Run by:** <Director | `cowork-scripter` | `cowork-prompt-craftsman` | `cowork-composer`>
+**Run by:** <Director | `ad-director-kit-scripter` | `ad-director-kit-prompt-craftsman` | `ad-director-kit-composer`>
 **Output:** <output file path>
 
 <Step body. What happens in this step, any recipe-specific structure (prompt blocks, file layout, ordering). Reference the inherited rules instead of restating them.>
@@ -113,7 +113,7 @@ mkdir -p brands/<brand>/ads/<slug>/{<step-folder-1>,<step-folder-2>,final} \
 ## Step N — Compose (or final assembly)
 
 **Inputs:** approved artefacts from prior steps
-**Run by:** `cowork-composer`
+**Run by:** `ad-director-kit-composer`
 
 <Compose step body. The final cut, optional variants, gallery preview, etc.>
 

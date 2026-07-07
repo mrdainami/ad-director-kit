@@ -42,7 +42,7 @@ Tools you use:
 - `kie_upload_file({ localPath })` — local file → KIE-hosted URL (~3-day TTL). Use for every reference image; never hand-craft curl uploads.
 - `kie_download({ url, destPath })` — pull a KIE result to disk.
 
-The cowork-specific addition on top of the MCP's defaults: **write `task_id` to the file's sidecar (or `pending.json`) before any status check, every time.** A status check that runs before the persist is one disconnect away from an orphaned task.
+The project-specific addition on top of the MCP's defaults: **write `task_id` to the file's sidecar (or `pending.json`) before any status check, every time.** A status check that runs before the persist is one disconnect away from an orphaned task.
 
 _Background: `kie_run_and_wait` was retired — it blocked past the MCP's ~60s call ceiling and died without returning the taskId, causing a duplicate submission (double credits). Standard pattern is now submit + on-demand check; never block._
 

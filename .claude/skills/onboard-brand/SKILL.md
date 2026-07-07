@@ -1,12 +1,12 @@
 ---
 name: onboard-brand
-description: "Conversational skill for setting up a brand-new brand in this cowork project. Use when the user says they want to add their brand, or when preflight finds the `brands/` folder empty. Creates the brand folder structure, asks the user about their product / audience / tone / links / what AI commonly gets wrong, and writes BRAND.md + PRODUCT-TRUTH.md from the conversation."
+description: "Conversational skill for setting up a brand-new brand in this ad-director-kit project. Use when the user says they want to add their brand, or when preflight finds the `brands/` folder empty. Creates the brand folder structure, asks the user about their product / audience / tone / links / what AI commonly gets wrong, and writes BRAND.md + PRODUCT-TRUTH.md from the conversation."
 allowed-tools: Read, Write, Edit, Glob, Bash, mcp__ffmpeg__shell_run
 ---
 
 # Skill: onboard-brand
 
-Use this skill when a user wants to add a new brand to this cowork project. It produces a brand kit complete enough that the `seedance-storyboard` recipe can run against it.
+Use this skill when a user wants to add a new brand to this ad-director-kit project. It produces a brand kit complete enough that the `seedance-storyboard` recipe can run against it.
 
 ## Inputs you collect by chat
 
@@ -39,7 +39,7 @@ mkdir -p brands/<slug>/references brands/<slug>/{logo,notes,ads}
 
 ### 2. Ask the user to drop in their assets
 
-> "Drop your product photos into `cowork/brands/<slug>/references/` (group them into component subfolders, or flat for a simple product) and your logo into `cowork/brands/<slug>/logo/`. Tell me when done."
+> "Drop your product photos into `ad-director-kit/brands/<slug>/references/` (group them into component subfolders, or flat for a simple product) and your logo into `ad-director-kit/brands/<slug>/logo/`. Tell me when done."
 
 Wait for confirmation. Then `ls` the folders and report what you see. If `references/` is empty or `logo/` is empty, push back — the recipe needs at least a few reference photos and one logo.
 

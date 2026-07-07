@@ -1,5 +1,5 @@
 ---
-description: Universal prompt-writing conventions. Apply to every KIE generation in any cowork recipe.
+description: Universal prompt-writing conventions. Apply to every KIE generation in any ad-director-kit recipe.
 ---
 
 # Prompt conventions

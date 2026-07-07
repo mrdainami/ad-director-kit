@@ -1,6 +1,6 @@
 ---
-name: cowork-scripter
-description: "Use this agent when the cowork Director needs to turn an ad idea (or a user-supplied script) into a locked `brief.md` for a brand ad. Triggered at Step 1 of any recipe. Two modes: Brainstorm (idea → angles → full brief) or Ingest (script supplied → structured brief)."
+name: ad-director-kit-scripter
+description: "Use this agent when the ad-director-kit Director needs to turn an ad idea (or a user-supplied script) into a locked `brief.md` for a brand ad. Triggered at Step 1 of any recipe. Two modes: Brainstorm (idea → angles → full brief) or Ingest (script supplied → structured brief)."
 tools:
   - Read
   - Write

@@ -1,6 +1,6 @@
 ---
 name: seedance-storyboard
-description: "Recipe for producing a vertical brand video Reel from a brand kit + an ad idea. Storyboard-first: brief → plan → foundation refs → multi-panel storyboards (typically 3–8 panels per segment) → Seedance video segments (3–15s each, variable count) → BGM (Suno, 2 variants) → ffmpeg compose with BGM bed + end-card. Use when the cowork user asks to make a brand ad with the seedance-storyboard recipe."
+description: "Recipe for producing a vertical brand video Reel from a brand kit + an ad idea. Storyboard-first: brief → plan → foundation refs → multi-panel storyboards (typically 3–8 panels per segment) → Seedance video segments (3–15s each, variable count) → BGM (Suno, 2 variants) → ffmpeg compose with BGM bed + end-card. Use when the ad-director-kit user asks to make a brand ad with the seedance-storyboard recipe."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Task, mcp__kie__kie_post, mcp__kie__kie_get, mcp__kie__kie_upload_file, mcp__kie__kie_download, mcp__kie__kie_fetch_model_docs, mcp__ffmpeg__shell_run, mcp__ffmpeg__download
 ---
 
@@ -18,14 +18,14 @@ You (the Director) follow these steps in order. Each step has a gate — never s
 
 | Output | Format | Generator | Step |
 |---|---|---|---|
-| Locked brief | `brief.md` | `cowork-scripter` subagent | 1 |
+| Locked brief | `brief.md` | `ad-director-kit-scripter` subagent | 1 |
 | Recipe plan | `plan.md` | Director (you) writes directly | 2 |
-| Foundation refs | PNG, variable count | `cowork-prompt-craftsman` → KIE image model | 3 |
-| Storyboards (one per segment) | Multi-panel PNG (typically 3–8 panels per segment, agent picks N to match the segment's shot count) | `cowork-prompt-craftsman` → KIE image model | 4 |
-| Segments | MP4 (3–15s each, 9:16, VO+SFX embedded, NO music) | `cowork-prompt-craftsman` → Seedance | 5 |
-| BGM variants | MP3, 2 variants | `cowork-prompt-craftsman` → Suno | 6 |
-| Final cut(s) | MP4 (total length variable, 9:16) | `cowork-composer` → ffmpeg | 7 |
-| Gallery preview | HTML | `cowork-composer` | 7 |
+| Foundation refs | PNG, variable count | `ad-director-kit-prompt-craftsman` → KIE image model | 3 |
+| Storyboards (one per segment) | Multi-panel PNG (typically 3–8 panels per segment, agent picks N to match the segment's shot count) | `ad-director-kit-prompt-craftsman` → KIE image model | 4 |
+| Segments | MP4 (3–15s each, 9:16, VO+SFX embedded, NO music) | `ad-director-kit-prompt-craftsman` → Seedance | 5 |
+| BGM variants | MP3, 2 variants | `ad-director-kit-prompt-craftsman` → Suno | 6 |
+| Final cut(s) | MP4 (total length variable, 9:16) | `ad-director-kit-composer` → ffmpeg | 7 |
+| Gallery preview | HTML | `ad-director-kit-composer` | 7 |
 
 ## Folder layout for one ad
 
@@ -89,7 +89,7 @@ The folder owns the entire ad's working set. Once created, every artefact for th
 ## Step 1 — Idea → Brief
 
 **Inputs:** user's ad idea (free-form chat), `BRAND.md`, this skill.
-**Subagent:** dispatch `cowork-scripter` via the Task tool.
+**Subagent:** dispatch `ad-director-kit-scripter` via the Task tool.
 **Output:** `brands/<brand>/ads/<ad-slug>/brief.md`.
 
 The brief format is specified in the Scripter's spec. Key requirement: it records `Recipe: seedance-storyboard (v1)` at the top so future re-runs are deterministic against this recipe version.
@@ -193,7 +193,7 @@ Plan structure:
 ## Step 3 — Generate foundation refs
 
 **Inputs:** `plan.md` (the generated-refs list), reference photos (resolved by role via `reference-map.json`), `PRODUCT-TRUTH.md`, `PRODUCT-SPEC.md`, `.claude/agent-memory/asset-urls.json`.
-**Subagent:** `cowork-prompt-craftsman` — **batched** (all refs in one wave, not one at a time).
+**Subagent:** `ad-director-kit-prompt-craftsman` — **batched** (all refs in one wave, not one at a time).
 **Batched flow** — see `.claude/rules/kie-and-files.md` §3 (batching) + §4 (job lifecycle):
 
 1. Craftsman writes each ref's prompt (resolving image refs by role via `reference-map.json`, enforcing physics invariants) and **submits all of them** via `kie_post`, returning every `taskId`.
@@ -214,7 +214,7 @@ Plan structure:
 ## Step 4 — Storyboards (one per segment)
 
 **Inputs:** approved refs from Step 3 + `plan.md` (per-segment storyboard intent).
-**Subagent:** `cowork-prompt-craftsman` — **batched** across segments. Follow the lifecycle in `.claude/rules/kie-and-files.md` §3–4: submit all, persist task IDs, STOP. The user asks "check"; you check; gate each as it lands.
+**Subagent:** `ad-director-kit-prompt-craftsman` — **batched** across segments. Follow the lifecycle in `.claude/rules/kie-and-files.md` §3–4: submit all, persist task IDs, STOP. The user asks "check"; you check; gate each as it lands.
 
 Per segment, Craftsman writes a composite prompt for a **multi-panel storyboard PNG**:
 
@@ -243,7 +243,7 @@ The storyboard is the **last cheap step before video gen** — get it right here
 ## Step 5 — Video segments
 
 **Inputs:** approved storyboard for the segment, the refs called out in panels, the segment's VO line from `brief.md`, the segment's duration from `brief.md`.
-**Subagent:** `cowork-prompt-craftsman` — **batched** across segments. Follow the lifecycle in `.claude/rules/kie-and-files.md` §3–4. This is the slow step (often 10–15 min per segment), so submitting all at once and letting the user say "check" later is essential — never auto-poll.
+**Subagent:** `ad-director-kit-prompt-craftsman` — **batched** across segments. Follow the lifecycle in `.claude/rules/kie-and-files.md` §3–4. This is the slow step (often 10–15 min per segment), so submitting all at once and letting the user say "check" later is essential — never auto-poll.
 
 Per segment:
 1. Craftsman writes the Seedance Pro motion prompt. Duration matches `brief.md` (3–15s window). Numbers the shots, calls transitions, anchors physics from `PRODUCT-SPEC.md`.
@@ -308,7 +308,7 @@ This is the highest-cost generation in the recipe — **never skip the gate**.
 ## Step 6 — BGM
 
 **Inputs:** music brief from `plan.md`, total cut length.
-**Subagent:** `cowork-prompt-craftsman`.
+**Subagent:** `ad-director-kit-prompt-craftsman`.
 
 1. Craftsman writes the Suno prompt — vibe + instrumentation + length-to-fit + no vocals (default)
 2. Generates 2 variants (default — user can request more)
@@ -322,7 +322,7 @@ The pick is recorded in `.claude/agent-memory/<ad-slug>-music-pick.md` so the Co
 ## Step 7 — Compose
 
 **Inputs:** approved segments (in segment order), picked BGM, end-card spec.
-**Subagent:** dispatch `cowork-composer`.
+**Subagent:** dispatch `ad-director-kit-composer`.
 
 1. Composer reads `brief.md` for end-card CTA and brand-mark path; reads `.claude/agent-memory/<ad-slug>-music-pick.md` for BGM choice
 2. Writes `final/compose.json` (or `compose-<variant>.json`)

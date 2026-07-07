@@ -18,12 +18,12 @@ You (the Director) follow these steps in order. Each step has a gate — never s
 
 | Output | Format | Generator | Step |
 |---|---|---|---|
-| Locked brief | `brief.md` | `cowork-scripter` subagent | 1 |
+| Locked brief | `brief.md` | `ad-director-kit-scripter` subagent | 1 |
 | Concept plan (per-ad concept + optional ad-type ref + ratio) | `plan.md` | Director (you) writes directly | 2 |
-| Foundation refs (optional, only when needed) | PNG | `cowork-prompt-craftsman` → gpt-image-2-image-to-image | 3 |
-| Final static ad images | PNG | `cowork-prompt-craftsman` → gpt-image-2-image-to-image | 4 |
-| Variants (optional — different ratio, alt headline) | PNG | `cowork-prompt-craftsman` → gpt-image-2-image-to-image | 5 |
-| Curated final folder + gallery | PNG copies + `gallery.html` | `cowork-composer` (or Director) | 6 |
+| Foundation refs (optional, only when needed) | PNG | `ad-director-kit-prompt-craftsman` → gpt-image-2-image-to-image | 3 |
+| Final static ad images | PNG | `ad-director-kit-prompt-craftsman` → gpt-image-2-image-to-image | 4 |
+| Variants (optional — different ratio, alt headline) | PNG | `ad-director-kit-prompt-craftsman` → gpt-image-2-image-to-image | 5 |
+| Curated final folder + gallery | PNG copies + `gallery.html` | `ad-director-kit-composer` (or Director) | 6 |
 
 ## Folder layout for one campaign
 
@@ -80,7 +80,7 @@ The `foundation/` folder is created even if Step 3 doesn't run — it's cheap an
 ## Step 1 — Brief
 
 **Inputs:** user's campaign idea, brand context loaded in Step 0a.
-**Run by:** `cowork-scripter`
+**Run by:** `ad-director-kit-scripter`
 **Output:** `brands/<brand>/ads/<slug>/brief.md`
 
 Dispatch the scripter with the campaign idea. It returns a locked `brief.md` covering:
@@ -125,7 +125,7 @@ Each concept entry in `plan.md` records:
 ## Step 3 — Foundation refs (optional, only for concepts that need them)
 
 **Inputs:** concepts in `plan.md` with `Foundation ref needed? yes`.
-**Run by:** `cowork-prompt-craftsman` → `gpt-image-2-image-to-image`
+**Run by:** `ad-director-kit-prompt-craftsman` → `gpt-image-2-image-to-image`
 **Output:** `brands/<brand>/ads/<slug>/foundation/F-<NAME>.png` + sidecar
 
 **Model: `gpt-image-2-image-to-image`** (locked — same model as Step 4 so foundation refs and final ads stay visually consistent).
@@ -146,7 +146,7 @@ If multiple foundation refs are needed across the campaign, submit them all in o
 ## Step 4 — Final static ad image
 
 **Inputs:** approved `plan.md`, approved foundation refs (if any), brand kit refs.
-**Run by:** `cowork-prompt-craftsman` → `gpt-image-2-image-to-image`
+**Run by:** `ad-director-kit-prompt-craftsman` → `gpt-image-2-image-to-image`
 **Output:** `brands/<brand>/ads/<slug>/ads/AD-<X>.png` + sidecar
 
 **Model: `gpt-image-2-image-to-image`** (locked).
@@ -175,7 +175,7 @@ Submit all approved concepts in one batch per `rules/kie-and-files.md §3`, pers
 ## Step 5 — Variants (optional)
 
 **Inputs:** an approved ad from Step 4, the user's variant request.
-**Run by:** `cowork-prompt-craftsman` → `gpt-image-2-image-to-image`
+**Run by:** `ad-director-kit-prompt-craftsman` → `gpt-image-2-image-to-image`
 **Output:** `brands/<brand>/ads/<slug>/ads/AD-<X>-<suffix>.png` + sidecar
 
 When the user wants the same concept in a different aspect ratio (`AD-A-9x16.png`), with a different headline (`AD-A-alt.png`), or with a tone shift, this is a small-delta regen: take the original Step 4 prompt, edit only what changed, submit a fresh task. The variant gets its own sidecar — lineage lives in the handle suffix, not in a field.
@@ -187,7 +187,7 @@ When the user wants the same concept in a different aspect ratio (`AD-A-9x16.png
 ## Step 6 — Final folder
 
 **Inputs:** all approved ads + variants from Steps 4–5.
-**Run by:** `cowork-composer` (or Director directly — this step has no ffmpeg work, just file ops + an HTML page)
+**Run by:** `ad-director-kit-composer` (or Director directly — this step has no ffmpeg work, just file ops + an HTML page)
 
 For each approved final from `ads/`, copy it to `final/` keeping its handle name. Then write `final/gallery.html` — a single self-contained page that shows every final at its rendered ratio, with the handle name, the ad-type used (if any), and the headline copy underneath each. This is what the user shows the client / saves to disk for handoff.
 

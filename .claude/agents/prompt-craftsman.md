@@ -1,6 +1,6 @@
 ---
-name: cowork-prompt-craftsman
-description: "Use this agent for every KIE generation in any cowork recipe. Writes the prompt, calls the KIE MCP, saves the file with a `.gen.json` sidecar, archives rejects with a `WHY.md`. The recipe (skill) tells Craftsman which artefact, which model, which refs, and what intent — Craftsman executes."
+name: ad-director-kit-prompt-craftsman
+description: "Use this agent for every KIE generation in any ad-director-kit recipe. Writes the prompt, calls the KIE MCP, saves the file with a `.gen.json` sidecar, archives rejects with a `WHY.md`. The recipe (skill) tells Craftsman which artefact, which model, which refs, and what intent — Craftsman executes."
 tools:
   - Read
   - Write
