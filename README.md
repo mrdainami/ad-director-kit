@@ -1,5 +1,8 @@
 # The AI Ad Director Kit
 
+> **⬇ Get the kit → [Download the ready-to-run ZIP](https://github.com/mrdainami/ad-director-kit/releases/latest/download/ad-director-kit.zip)** (includes both connectors).
+> Don't use "Use this template" / "Download ZIP" from the file list above to get the connectors — the two `.mcpb` connector files aren't in the source tree (the ffmpeg one is over GitHub's 100 MB file limit). They ship inside the Release ZIP, ready to drag onto Cowork.
+
 > **📖 Full setup guide + walkthrough:** https://dainami.ai/resources/ad-director-kit
 
 A self-contained Claude project for making brand video ads. Drop a folder for each brand into `brands/`, open this folder in **Claude Cowork**, and chat with the Director to onboard the brand + generate ads. Every artefact lands in `brands/<brand>/ads/<ad-slug>/`.
